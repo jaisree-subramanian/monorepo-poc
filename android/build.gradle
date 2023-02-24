@@ -1,0 +1,60 @@
+buildscript {
+    ext {
+        androidPluginVersion = '7.4.1'
+        appCompatVersion = '1.6.1'
+        jacoco_version = '0.8.8'
+        kotlin_version = '1.7.22'
+        androidxTestVersion = "1.4.0"
+        daggerVersion = "2.45"
+        markwonVersion = "4.6.2"
+        prismVersion = "2.0.0"
+        androidLibraryVersion = "master-SNAPSHOT"
+        mockitoVersion = "4.11.0"
+        mockitoKotlinVersion = "4.1.0"
+        mockkVersion = "1.13.3"
+        espressoVersion = "3.5.1"
+        workRuntime = "2.8.0"
+        fidoVersion = "4.1.0-patch1"
+        checkerVersion = "3.21.2"
+        exoplayerVersion = "2.18.3"
+        documentScannerVersion = "1.0.1"
+        roomVersion = "2.5.0"
+
+        ciBuild = System.getenv("CI") == "true"
+    }
+}
+
+subprojects {
+    buildscript {
+        repositories {
+            gradlePluginPortal()
+            google()
+            mavenCentral()
+        }
+    }
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+task installGitHooks(type: Copy, group: "development") {
+    def sourceFolder = "${rootProject.projectDir}/scripts/hooks"
+    def destFolder = "${rootProject.projectDir}/.git/hooks"
+
+    description = "Install git hooks"
+
+    from(sourceFolder) {
+        include '*'
+    }
+    into destFolder
+
+    eachFile { file ->
+        println "${sourceFolder}/${file.relativeSourcePath} -> ${destFolder}/${file.path}"
+    }
+}

@@ -1,0 +1,10 @@
+rootProject.name = 'Nextcloud'
+
+include ':app'
+include ':appscan'
+
+//includeBuild('../android-common') {
+//    dependencySubstitution {
+//        substitute module('com.github.nextcloud.android-common:ui') using project(':ui')
+//    }
+//}
